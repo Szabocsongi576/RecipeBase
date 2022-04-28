@@ -10,7 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Receptbázis">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.delete_receipt_dialog.asdActivity"
+            android:exported="false"
+            android:label="@string/title_activity_asd"
+            android:theme="@style/Theme.Receptbázis.NoActionBar" />
+        <activity
+            android:name=".ui.receipt_details.ReceiptDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
