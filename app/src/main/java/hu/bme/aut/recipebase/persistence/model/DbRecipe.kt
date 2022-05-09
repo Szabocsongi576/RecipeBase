@@ -8,7 +8,6 @@ import java.math.BigDecimal
 data class DbRecipe(
     @PrimaryKey(autoGenerate = true) var recipeId: Long,
     var country: String?,
-    private var facebookPosts: MutableList<Any>?,
     var servingsNounSingular: String?,
     var prepTimeMinutes: BigDecimal?,
     var brandId: String?,
@@ -36,7 +35,6 @@ data class DbRecipe(
     var id: BigDecimal?,
     var name: String?,
     var thumbnailAltText: String?,
-    private var renditions: MutableList<Any>?,
     var beautyUrl: String?,
     var videoAdContent: String?,
     var cookTimeMinutes: BigDecimal?,
@@ -45,7 +43,6 @@ data class DbRecipe(
     var isIsOneTop: Boolean?,
     var isIsShoppable: Boolean?,
     var seoTitle: String?,
-    private var compilations: MutableList<Any>?,
     var aspectRatio: String?,
     var inspiredByUrl: String?,
 )

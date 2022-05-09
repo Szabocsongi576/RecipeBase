@@ -12,6 +12,5 @@ import java.time.OffsetDateTime
 data class DbMeasurement(
     @PrimaryKey var id: BigDecimal,
     var componentId: String,
-    var unit: Unit?,
     var quantity: String?,
 )

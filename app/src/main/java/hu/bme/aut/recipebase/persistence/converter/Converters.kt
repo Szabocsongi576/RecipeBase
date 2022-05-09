@@ -1,6 +1,7 @@
 package hu.bme.aut.recipebase.persistence.converter
 
 import androidx.room.TypeConverter
+import com.google.gson.JsonArray
 import java.math.BigDecimal
 import java.util.*
 
@@ -21,7 +22,17 @@ class Converters {
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
+    fun toTimestamp(date: Date?): Long? {
         return date?.time
     }
+
+    /*@TypeConverter
+    fun fromLong(value: MutableList<Any>?): String? {
+        return value?.toString()
+    }
+
+    @TypeConverter
+    fun toLong(value: String?): MutableList<Any>? {
+        return arrayListOf()
+    }*/
 }
