@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.bme.aut.recipebase.model.network
+package hu.bme.aut.recipebase.network.model
 
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty

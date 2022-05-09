@@ -9,38 +9,65 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.bme.aut.recipebase.model.network
+package hu.bme.aut.recipebase.network.model
 
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
+import java.math.BigDecimal
 import java.util.*
 
 /**
- * Credit
+ * Tag
  */
-class Credit {
+class Tag {
     /**
      * Get name
      * @return name
      */
-    @get:ApiModelProperty(example = "Alexandra Covello", value = "")
+    @get:ApiModelProperty(example = "lunch", value = "")
     @SerializedName("name")
     var name: String? = null
+
+    /**
+     * Get id
+     * @return id
+     */
+    @get:ApiModelProperty(example = "64489.0", value = "")
+    @SerializedName("id")
+    var id: BigDecimal? = null
+
+    /**
+     * Get displayName
+     * @return displayName
+     */
+    @get:ApiModelProperty(example = "Lunch", value = "")
+    @SerializedName("display_name")
+    var displayName: String? = null
 
     /**
      * Get type
      * @return type
      */
-    @get:ApiModelProperty(example = "internal", value = "")
+    @get:ApiModelProperty(example = "meal", value = "")
     @SerializedName("type")
     var type: String? = null
-    fun name(name: String?): Credit {
+    fun name(name: String?): Tag {
         this.name = name
         return this
     }
 
-    fun type(type: String?): Credit {
+    fun id(id: BigDecimal?): Tag {
+        this.id = id
+        return this
+    }
+
+    fun displayName(displayName: String?): Tag {
+        this.displayName = displayName
+        return this
+    }
+
+    fun type(type: String?): Tag {
         this.type = type
         return this
     }
@@ -52,19 +79,23 @@ class Credit {
         if (o == null || javaClass != o.javaClass) {
             return false
         }
-        val credit = o as Credit
-        return name == credit.name &&
-                type == credit.type
+        val tag = o as Tag
+        return name == tag.name &&
+                id == tag.id &&
+                displayName == tag.displayName &&
+                type == tag.type
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(name, type)
+        return Objects.hash(name, id, displayName, type)
     }
 
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("class Credit {\n")
+        sb.append("class Tag {\n")
         sb.append("    name: ").append(toIndentedString(name)).append("\n")
+        sb.append("    id: ").append(toIndentedString(id)).append("\n")
+        sb.append("    displayName: ").append(toIndentedString(displayName)).append("\n")
         sb.append("    type: ").append(toIndentedString(type)).append("\n")
         sb.append("}")
         return sb.toString()

@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.bme.aut.recipebase.model.network
+package hu.bme.aut.recipebase.network.model
 
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
@@ -17,31 +17,31 @@ import java.lang.StringBuilder
 import java.util.*
 
 /**
- * Topics
+ * TotalTimeTier
  */
-class Topics {
+class TotalTimeTier {
     /**
-     * Get slug
-     * @return slug
+     * Get tier
+     * @return tier
      */
-    @get:ApiModelProperty(example = "brunch", value = "")
-    @SerializedName("slug")
-    var slug: String? = null
+    @get:ApiModelProperty(example = "under_15_minutes", value = "")
+    @SerializedName("tier")
+    var tier: String? = null
 
     /**
-     * Get name
-     * @return name
+     * Get displayTier
+     * @return displayTier
      */
-    @get:ApiModelProperty(example = "Sunday Brunch", value = "")
-    @SerializedName("name")
-    var name: String? = null
-    fun slug(slug: String?): Topics {
-        this.slug = slug
+    @get:ApiModelProperty(example = "Under 15 minutes", value = "")
+    @SerializedName("display_tier")
+    var displayTier: String? = null
+    fun tier(tier: String?): TotalTimeTier {
+        this.tier = tier
         return this
     }
 
-    fun name(name: String?): Topics {
-        this.name = name
+    fun displayTier(displayTier: String?): TotalTimeTier {
+        this.displayTier = displayTier
         return this
     }
 
@@ -52,20 +52,20 @@ class Topics {
         if (o == null || javaClass != o.javaClass) {
             return false
         }
-        val topics = o as Topics
-        return slug == topics.slug &&
-                name == topics.name
+        val totalTimeTier = o as TotalTimeTier
+        return tier == totalTimeTier.tier &&
+                displayTier == totalTimeTier.displayTier
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(slug, name)
+        return Objects.hash(tier, displayTier)
     }
 
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("class Topics {\n")
-        sb.append("    slug: ").append(toIndentedString(slug)).append("\n")
-        sb.append("    name: ").append(toIndentedString(name)).append("\n")
+        sb.append("class TotalTimeTier {\n")
+        sb.append("    tier: ").append(toIndentedString(tier)).append("\n")
+        sb.append("    displayTier: ").append(toIndentedString(displayTier)).append("\n")
         sb.append("}")
         return sb.toString()
     }

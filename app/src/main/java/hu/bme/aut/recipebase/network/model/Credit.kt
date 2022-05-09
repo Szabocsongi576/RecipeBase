@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.bme.aut.recipebase.model.network
+package hu.bme.aut.recipebase.network.model
 
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
@@ -17,31 +17,31 @@ import java.lang.StringBuilder
 import java.util.*
 
 /**
- * TotalTimeTier
+ * Credit
  */
-class TotalTimeTier {
+class Credit {
     /**
-     * Get tier
-     * @return tier
+     * Get name
+     * @return name
      */
-    @get:ApiModelProperty(example = "under_15_minutes", value = "")
-    @SerializedName("tier")
-    var tier: String? = null
+    @get:ApiModelProperty(example = "Alexandra Covello", value = "")
+    @SerializedName("name")
+    var name: String? = null
 
     /**
-     * Get displayTier
-     * @return displayTier
+     * Get type
+     * @return type
      */
-    @get:ApiModelProperty(example = "Under 15 minutes", value = "")
-    @SerializedName("display_tier")
-    var displayTier: String? = null
-    fun tier(tier: String?): TotalTimeTier {
-        this.tier = tier
+    @get:ApiModelProperty(example = "internal", value = "")
+    @SerializedName("type")
+    var type: String? = null
+    fun name(name: String?): Credit {
+        this.name = name
         return this
     }
 
-    fun displayTier(displayTier: String?): TotalTimeTier {
-        this.displayTier = displayTier
+    fun type(type: String?): Credit {
+        this.type = type
         return this
     }
 
@@ -52,20 +52,20 @@ class TotalTimeTier {
         if (o == null || javaClass != o.javaClass) {
             return false
         }
-        val totalTimeTier = o as TotalTimeTier
-        return tier == totalTimeTier.tier &&
-                displayTier == totalTimeTier.displayTier
+        val credit = o as Credit
+        return name == credit.name &&
+                type == credit.type
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(tier, displayTier)
+        return Objects.hash(name, type)
     }
 
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("class TotalTimeTier {\n")
-        sb.append("    tier: ").append(toIndentedString(tier)).append("\n")
-        sb.append("    displayTier: ").append(toIndentedString(displayTier)).append("\n")
+        sb.append("class Credit {\n")
+        sb.append("    name: ").append(toIndentedString(name)).append("\n")
+        sb.append("    type: ").append(toIndentedString(type)).append("\n")
         sb.append("}")
         return sb.toString()
     }

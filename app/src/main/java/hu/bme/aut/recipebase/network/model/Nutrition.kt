@@ -9,13 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.bme.aut.recipebase.model.network
+package hu.bme.aut.recipebase.network.model
 
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
 import java.math.BigDecimal
-import java.time.OffsetDateTime
 import java.util.*
 
 /**
@@ -23,7 +22,7 @@ import java.util.*
  */
 class Nutrition {
     @SerializedName("updated_at")
-    private var updatedAt: OffsetDateTime? = null
+    private var updatedAt: Date? = null
 
     /**
      * Get protein
@@ -72,7 +71,7 @@ class Nutrition {
     @get:ApiModelProperty(example = "32.0", value = "")
     @SerializedName("fiber")
     var fiber: BigDecimal? = null
-    fun updatedAt(updatedAt: OffsetDateTime?): Nutrition {
+    fun updatedAt(updatedAt: Date?): Nutrition {
         this.updatedAt = updatedAt
         return this
     }
@@ -82,11 +81,11 @@ class Nutrition {
      * @return updatedAt
      */
     @ApiModelProperty(example = "2022-05-01T08:01:31+02:00", value = "")
-    fun getUpdatedAt(): OffsetDateTime? {
+    fun getUpdatedAt(): Date? {
         return updatedAt
     }
 
-    fun setUpdatedAt(updatedAt: OffsetDateTime?) {
+    fun setUpdatedAt(updatedAt: Date?) {
         this.updatedAt = updatedAt
     }
 

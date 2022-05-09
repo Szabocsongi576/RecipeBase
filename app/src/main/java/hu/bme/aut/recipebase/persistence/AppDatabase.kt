@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import hu.bme.aut.recipebase.model.db.Recipe
+import androidx.room.TypeConverters
+import hu.bme.aut.recipebase.persistence.converter.Converters
+import hu.bme.aut.recipebase.persistence.model.DbRecipe
 
-@Database(entities = [Recipe::class], version = 1)
+@Database(entities = [DbRecipe::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun recipeDao(): RecipeDao

@@ -1,8 +1,8 @@
 package hu.bme.aut.recipebase.network.api
 
 import android.database.Observable
-import hu.bme.aut.recipebase.model.network.Recipe
-import hu.bme.aut.recipebase.model.network.RecipeList
+import hu.bme.aut.recipebase.network.model.Recipe
+import hu.bme.aut.recipebase.network.model.RecipeList
 import retrofit2.http.*
 import java.math.BigDecimal
 
