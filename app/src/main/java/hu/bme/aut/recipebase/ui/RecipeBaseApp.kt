@@ -1,8 +1,7 @@
-package hu.bme.aut.recipebase
+package hu.bme.aut.recipebase.ui
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import hu.bme.aut.recipebase.di.AppComponent
 
 @HiltAndroidApp
 open class RecipeBaseApp : Application() {
