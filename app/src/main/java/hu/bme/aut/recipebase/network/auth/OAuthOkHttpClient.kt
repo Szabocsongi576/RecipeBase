@@ -1,6 +1,8 @@
 package hu.bme.aut.recipebase.network.auth
 
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.apache.oltu.oauth2.client.HttpClient
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest
 import org.apache.oltu.oauth2.client.response.OAuthClientResponse
@@ -27,28 +29,30 @@ class OAuthOkHttpClient : HttpClient {
         requestMethod: String?,
         responseClass: Class<T>?
     ): T {
-        var mediaType: MediaType? = MediaType.parse("application/json")
-        val requestBuilder: Request.Builder = Request.Builder().url(request.getLocationUri())
+        var mediaType: MediaType? = "application/json".toMediaTypeOrNull()
+        val requestBuilder: Request.Builder = Request.Builder().url(request.locationUri)
         if (headers != null) {
             for ((key, value) in headers) {
                 if (key.equals("Content-Type", ignoreCase = true)) {
-                    mediaType = MediaType.parse(value)
+                    mediaType = value?.toMediaTypeOrNull()
                 } else {
-                    requestBuilder.addHeader(key, value)
+                    if (value != null) {
+                        requestBuilder.addHeader(key, value)
+                    }
                 }
             }
         }
-        val body: RequestBody? = if (request.body != null) RequestBody.create(
-            mediaType,
-            request.body
-        ) else null
-        requestBuilder.method(requestMethod, body)
+        val body: RequestBody? = if (request.body != null) request.body
+            .toRequestBody(mediaType) else null
+        if (requestMethod != null) {
+            requestBuilder.method(requestMethod, body)
+        }
         return try {
             val response: Response = client.newCall(requestBuilder.build()).execute()
             OAuthClientResponseFactory.createCustomResponse(
-                response.body()!!.string(),
-                response.body()!!.contentType().toString(),
-                response.code(),
+                response.body!!.string(),
+                response.body!!.contentType().toString(),
+                response.code,
                 responseClass
             )
         } catch (e: IOException) {

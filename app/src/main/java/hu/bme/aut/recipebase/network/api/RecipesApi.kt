@@ -1,34 +1,46 @@
 package hu.bme.aut.recipebase.network.api
 
-import android.database.Observable
 import hu.bme.aut.recipebase.network.model.Recipe
 import hu.bme.aut.recipebase.network.model.RecipeList
 import retrofit2.http.*
 import java.math.BigDecimal
 
 interface RecipesApi {
+    /*companion object {
+        var api: RecipesApi? = null
+        fun getInstance() : RecipesApi {
+            if (api == null) {
+                api = Retrofit.Builder()
+                    .baseUrl("https://tasty.p.rapidapi.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build().create(RecipesApi::class.java)
+            }
+            return api!!
+        }
+    }*/
+
     /**
      * Creates a new Recipe
      *
      * @param body The Recipe to create (required)
-     * @return Observable&lt;Void&gt;
+     * @return Void&gt;
      */
     @Headers("Content-Type:application/json")
     @POST("recipes")
-    fun createNewRecipe(
+    suspend fun createNewRecipe(
         @retrofit2.http.Body body: Recipe?
-    ): Observable<Void?>?
+    ): Void?
 
     /**
      * Deletes a Recipe
      *
      * @param id Recipe id to delete (required)
-     * @return Observable&lt;Void&gt;
+     * @return Void&gt;
      */
     @DELETE("recipes/{Id}")
-    fun deleteRecipe(
+    suspend fun deleteRecipe(
         @retrofit2.http.Path("Id") id: Long?
-    ): Observable<Void?>?
+    ): Void?
 
     /**
      * Returns all Recipes
@@ -37,37 +49,37 @@ interface RecipesApi {
      * @param size Number of items returned per response (required)
      * @param tags Get suitable values from /tags/list API (optional, default to easy)
      * @param q Name of food or, ingredients to search by (optional)
-     * @return Observable&lt;List&lt;RecipeList&gt;&gt;
+     * @return RecipeList&gt;
      */
     @GET("recipes/list")
-    fun getAllRecipes(
+    suspend fun getAllRecipes(
         @retrofit2.http.Query("from") from: BigDecimal?,
         @retrofit2.http.Query("size") size: BigDecimal?,
         @retrofit2.http.Query("tags") tags: String?,
         @retrofit2.http.Query("q") q: String?
-    ): Observable<List<RecipeList?>?>?
+    ): RecipeList?
 
     /**
      * Returns a Recipe by id
      *
      * @param id The id value of any recipe returned in recipes/list API (required)
-     * @return Observable&lt;Recipe&gt;
+     * @return Recipe&gt;
      */
     @GET("recipes/get-more-info")
-    fun getRecipe(
+    suspend fun getRecipe(
         @retrofit2.http.Query("id") id: Long?
-    ): Observable<Recipe?>?
+    ): Recipe?
 
     /**
      * Update an existing Recipe
      *
      * @param id ID of the Recipe to return (required)
      * @param body The Recipe used to update the existing. (required)
-     * @return Observable&lt;Void&gt;
+     * @return Void&gt;
      */
     @Headers("Content-Type:application/json")
     @PUT("recipes/{Id}")
-    fun updateRecipe(
+    suspend fun updateRecipe(
         @retrofit2.http.Path("Id") id: Long?, @retrofit2.http.Body body: Recipe?
-    ): Observable<Void?>?
+    ): Void?
 }

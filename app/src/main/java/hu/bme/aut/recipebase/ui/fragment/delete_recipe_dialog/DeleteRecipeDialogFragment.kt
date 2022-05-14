@@ -1,4 +1,4 @@
-package hu.bme.aut.recipebase.ui.add_recipe_dialog
+package hu.bme.aut.recipebase.ui.fragment.delete_recipe_dialog
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.compose.material.Text
 import androidx.compose.ui.platform.ComposeView
 
-class AddRecipeDialogFragment : Fragment() {
+class DeleteRecipeDialogFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
