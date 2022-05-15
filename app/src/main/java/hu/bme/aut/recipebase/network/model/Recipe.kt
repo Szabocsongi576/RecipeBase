@@ -62,14 +62,6 @@ class Recipe {
     @SerializedName("sections")
     private var sections: MutableList<Section>? = null
 
-    /**
-     * Get brandId
-     * @return brandId
-     */
-    @get:ApiModelProperty(value = "")
-    @SerializedName("brand_id")
-    var brandId: String? = null
-
     @SerializedName("credits")
     private var credits: MutableList<Credit>? = null
 
@@ -88,14 +80,6 @@ class Recipe {
     @get:ApiModelProperty(example = "eng", value = "")
     @SerializedName("language")
     var language: String? = null
-
-    /**
-     * Get brand
-     * @return brand
-     */
-    @get:ApiModelProperty(value = "")
-    @SerializedName("brand")
-    var brand: String? = null
 
     /**
      * Get description
@@ -489,11 +473,6 @@ class Recipe {
         this.sections = sections
     }
 
-    fun brandId(brandId: String?): Recipe {
-        this.brandId = brandId
-        return this
-    }
-
     fun credits(credits: MutableList<Credit>?): Recipe {
         this.credits = credits
         return this
@@ -527,11 +506,6 @@ class Recipe {
 
     fun language(language: String?): Recipe {
         this.language = language
-        return this
-    }
-
-    fun brand(brand: String?): Recipe {
-        this.brand = brand
         return this
     }
 
@@ -832,11 +806,9 @@ class Recipe {
                 servingsNounSingular == recipe.servingsNounSingular &&
                 prepTimeMinutes == recipe.prepTimeMinutes &&
                 sections == recipe.sections &&
-                brandId == recipe.brandId &&
                 credits == recipe.credits &&
                 nutritionVisibility == recipe.nutritionVisibility &&
                 language == recipe.language &&
-                brand == recipe.brand &&
                 description == recipe.description &&
                 draftStatus == recipe.draftStatus &&
                 updatedAt == recipe.updatedAt &&
@@ -886,11 +858,9 @@ class Recipe {
             servingsNounSingular,
             prepTimeMinutes,
             sections,
-            brandId,
             credits,
             nutritionVisibility,
             language,
-            brand,
             description,
             draftStatus,
             updatedAt,
@@ -943,12 +913,10 @@ class Recipe {
             .append("\n")
         sb.append("    prepTimeMinutes: ").append(toIndentedString(prepTimeMinutes)).append("\n")
         sb.append("    sections: ").append(toIndentedString(sections)).append("\n")
-        sb.append("    brandId: ").append(toIndentedString(brandId)).append("\n")
         sb.append("    credits: ").append(toIndentedString(credits)).append("\n")
         sb.append("    nutritionVisibility: ").append(toIndentedString(nutritionVisibility))
             .append("\n")
         sb.append("    language: ").append(toIndentedString(language)).append("\n")
-        sb.append("    brand: ").append(toIndentedString(brand)).append("\n")
         sb.append("    description: ").append(toIndentedString(description)).append("\n")
         sb.append("    draftStatus: ").append(toIndentedString(draftStatus)).append("\n")
         sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n")

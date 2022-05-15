@@ -7,9 +7,9 @@ import okhttp3.Response
 import java.io.IOException
 
 class HttpBasicAuth : Interceptor {
-    var username: String? = null
-    var password: String? = null
-    fun setCredentials(username: String?, password: String?) {
+    private lateinit var username: String
+    private lateinit var password: String
+    fun setCredentials(username: String, password: String) {
         this.username = username
         this.password = password
     }
