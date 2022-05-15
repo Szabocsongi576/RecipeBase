@@ -6,6 +6,7 @@ import hu.bme.aut.recipebase.network.auth.ApiKeyAuth
 import hu.bme.aut.recipebase.network.auth.HttpBasicAuth
 import hu.bme.aut.recipebase.network.auth.OAuth
 import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -13,11 +14,10 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.IOException
-import java.lang.RuntimeException
 import java.lang.reflect.Type
 import java.text.DateFormat
 import java.time.format.DateTimeFormatter
-import java.util.LinkedHashMap
+
 
 class ApiClient() {
     private var apiAuthorizations: MutableMap<String, Interceptor?>
@@ -48,7 +48,7 @@ class ApiClient() {
      * @param authName Authentication name
      * @param apiKey API key
      */
-    constructor(authName: String, apiKey: String?) : this(authName) {
+    constructor(authName: String, apiKey: String) : this(authName) {
         setApiKey(apiKey)
     }
 
@@ -58,7 +58,7 @@ class ApiClient() {
      * @param username Username
      * @param password Password
      */
-    constructor(authName: String, username: String?, password: String?) : this(authName) {
+    constructor(authName: String, username: String, password: String) : this(authName) {
         setCredentials(username, password)
     }
 
@@ -87,6 +87,7 @@ class ApiClient() {
     private fun createDefaultAdapter() {
         json = JSON()
         okBuilder = OkHttpClient.Builder()
+            //.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY),)
         var baseUrl = "https://tasty.p.rapidapi.com"
         if (!baseUrl.endsWith("/")) baseUrl = "$baseUrl/"
         adapterBuilder = Retrofit.Builder()
@@ -128,7 +129,7 @@ class ApiClient() {
      * @param apiKey API key
      * @return ApiClient
      */
-    fun setApiKey(apiKey: String?): ApiClient {
+    private fun setApiKey(apiKey: String): ApiClient {
         for (apiAuthorization in apiAuthorizations.values) {
             if (apiAuthorization is ApiKeyAuth) {
                 val keyAuth: ApiKeyAuth = apiAuthorization
@@ -145,7 +146,7 @@ class ApiClient() {
      * @param password Password
      * @return ApiClient
      */
-    fun setCredentials(username: String?, password: String?): ApiClient {
+    private fun setCredentials(username: String, password: String): ApiClient {
         for (apiAuthorization in apiAuthorizations.values) {
             if (apiAuthorization is HttpBasicAuth) {
                 val basicAuth: HttpBasicAuth = apiAuthorization
@@ -165,7 +166,7 @@ class ApiClient() {
      * Helper method to configure the token endpoint of the first oauth found in the apiAuthorizations (there should be only one)
      * @return Token request builder
      */
-    val tokenEndPoint: OAuthClientRequest.TokenRequestBuilder?
+    private val tokenEndPoint: OAuthClientRequest.TokenRequestBuilder?
         get() {
             for (apiAuthorization in apiAuthorizations.values) {
                 if (apiAuthorization is OAuth) {
@@ -257,7 +258,7 @@ class ApiClient() {
      * @param authorization Authorization interceptor
      * @return ApiClient
      */
-    fun addAuthorization(authName: String, authorization: Interceptor): ApiClient {
+    private fun addAuthorization(authName: String, authorization: Interceptor): ApiClient {
         if (apiAuthorizations.containsKey(authName)) {
             throw RuntimeException("auth name \"$authName\" already in api authorizations")
         }
@@ -288,7 +289,7 @@ class ApiClient() {
         return okBuilder
     }
 
-    fun addAuthsToOkBuilder(okBuilder: OkHttpClient.Builder?) {
+    private fun addAuthsToOkBuilder(okBuilder: OkHttpClient.Builder?) {
         for (apiAuthorization in apiAuthorizations.values) {
             if (apiAuthorization != null) {
                 okBuilder?.addInterceptor(apiAuthorization)

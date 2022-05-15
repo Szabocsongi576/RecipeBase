@@ -18,24 +18,20 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().build()
+    fun provideOkHttpClient(client: ApiClient): OkHttpClient {
+        return client.getOkBuilder()!!.build()
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun provideRetrofit(client: ApiClient): Retrofit {
+        return client.getAdapterBuilder()!!.build()
     }
 
     @Provides
     @Singleton
-    fun provideRecipesApi(retrofit: Retrofit): RecipesApi {
-        return retrofit.create(RecipesApi::class.java)
+    fun provideRecipesApi(client: ApiClient): RecipesApi {
+        return client.createService(RecipesApi::class.java)
     }
 
     @Provides

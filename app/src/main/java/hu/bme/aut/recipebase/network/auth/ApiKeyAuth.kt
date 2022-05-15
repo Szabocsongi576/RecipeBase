@@ -7,25 +7,20 @@ import java.io.IOException
 import java.net.URI
 import java.net.URISyntaxException
 
-class ApiKeyAuth(val location: String, val paramName: String) : Interceptor {
-    var apiKey: String? = null
+class ApiKeyAuth(private val location: String, private val paramName: String) : Interceptor {
+    lateinit var apiKey: String
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val paramValue: String
         var request: Request = chain.request()
         if ("query" == location) {
-            var newQuery: String = request.url().uri().getQuery()
+            var newQuery: String = request.url.toUri().query
             paramValue = "$paramName=$apiKey"
-            if (newQuery == null) {
-                newQuery = paramValue
-            } else {
-                newQuery += "&$paramValue"
-            }
-            val newUri: URI
-            newUri = try {
+            newQuery += "&$paramValue"
+            val newUri: URI = try {
                 URI(
-                    request.url().uri().getScheme(), request.url().uri().getAuthority(),
-                    request.url().uri().getPath(), newQuery, request.url().uri().getFragment()
+                    request.url.toUri().scheme, request.url.toUri().authority,
+                    request.url.toUri().path, newQuery, request.url.toUri().fragment
                 )
             } catch (e: URISyntaxException) {
                 throw IOException(e)

@@ -4,19 +4,27 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import hu.bme.aut.recipebase.ui.main.MainRepository
-import hu.bme.aut.recipebase.ui.recipe_details.RecipeDetailsRepository
+import hu.bme.aut.recipebase.network.api.RecipesApi
+import hu.bme.aut.recipebase.persistence.RecipeDao
+import hu.bme.aut.recipebase.ui.activity.main.MainRepository
+import hu.bme.aut.recipebase.ui.activity.recipe_details.RecipeDetailsRepository
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
-    @Provides
     @Singleton
-    fun provideMainRepository() = MainRepository()
+    @Provides
+    fun provideMainRepository(api: RecipesApi, dao: RecipeDao) = MainRepository(
+        recipesApi = api,
+        recipeDao = dao,
+    )
 
-    @Provides
     @Singleton
-    fun provideReceiptDetailsRepository() = RecipeDetailsRepository()
+    @Provides
+    fun provideReceiptDetailsRepository(api: RecipesApi, dao: RecipeDao) = RecipeDetailsRepository(
+        recipesApi = api,
+        recipeDao = dao,
+    )
 }
