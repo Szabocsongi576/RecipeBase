@@ -42,7 +42,7 @@ class OAuth(client: OkHttpClient, requestBuilder: OAuthClientRequest.TokenReques
         authenticationRequestBuilder = OAuthClientRequest.authorizationLocation(authorizationUrl)
     }
 
-    fun setFlow(flow: OAuthFlow?) {
+    private fun setFlow(flow: OAuthFlow?) {
         when (flow) {
             OAuthFlow.accessCode, OAuthFlow.implicit -> tokenRequestBuilder.setGrantType(GrantType.AUTHORIZATION_CODE)
             OAuthFlow.password -> tokenRequestBuilder.setGrantType(GrantType.PASSWORD)
@@ -52,7 +52,7 @@ class OAuth(client: OkHttpClient, requestBuilder: OAuthClientRequest.TokenReques
     }
 
     @Throws(IOException::class)
-    override fun intercept(chain: Interceptor.Chain): Response? {
+    override fun intercept(chain: Interceptor.Chain): Response {
         return retryingIntercept(chain, true)
     }
 
@@ -60,7 +60,7 @@ class OAuth(client: OkHttpClient, requestBuilder: OAuthClientRequest.TokenReques
     fun retryingIntercept(
         chain: Interceptor.Chain,
         updateTokenAndRetryOnAuthorizationFailure: Boolean
-    ): Response? {
+    ): Response {
         val request: Request = chain.request()
 
         // If the request already have an authorization (eg. Basic auth), do nothing
@@ -78,7 +78,7 @@ class OAuth(client: OkHttpClient, requestBuilder: OAuthClientRequest.TokenReques
             val rb: Request.Builder = request.newBuilder()
             val requestAccessToken: String = accessToken as String
             oAuthRequest = try {
-                OAuthBearerClientRequest(request.url().toString())
+                OAuthBearerClientRequest(request.url.toString())
                     .setAccessToken(requestAccessToken)
                     .buildHeaderMessage()
             } catch (e: OAuthSystemException) {
@@ -87,20 +87,20 @@ class OAuth(client: OkHttpClient, requestBuilder: OAuthClientRequest.TokenReques
             for ((key, value) in oAuthRequest.headers) {
                 rb.addHeader(key, value)
             }
-            rb.url(oAuthRequest.getLocationUri())
+            rb.url(oAuthRequest.locationUri)
 
             //Execute the request
             val response: Response = chain.proceed(rb.build())
 
             // 401/403 most likely indicates that access token has expired. Unless it happens two times in a row.
-            if (response != null && (response.code() === HttpURLConnection.HTTP_UNAUTHORIZED || response.code() === HttpURLConnection.HTTP_FORBIDDEN) && updateTokenAndRetryOnAuthorizationFailure) {
+            if ((response.code == HttpURLConnection.HTTP_UNAUTHORIZED || response.code == HttpURLConnection.HTTP_FORBIDDEN) && updateTokenAndRetryOnAuthorizationFailure) {
                 try {
                     if (updateAccessToken(requestAccessToken)) {
-                        response.body()?.close()
+                        response.body?.close()
                         return retryingIntercept(chain, false)
                     }
                 } catch (e: Exception) {
-                    response.body()?.close()
+                    response.body?.close()
                     throw e
                 }
             }
@@ -121,10 +121,10 @@ class OAuth(client: OkHttpClient, requestBuilder: OAuthClientRequest.TokenReques
                 val accessTokenResponse: OAuthJSONAccessTokenResponse = oauthClient.accessToken(
                     tokenRequestBuilder.buildBodyMessage()
                 )
-                if (accessTokenResponse != null && accessTokenResponse.getAccessToken() != null) {
-                    accessToken = accessTokenResponse.getAccessToken()
+                if (accessTokenResponse.accessToken != null) {
+                    accessToken = accessTokenResponse.accessToken
                     if (accessTokenListener != null) {
-                        accessTokenListener!!.notify(accessTokenResponse.getOAuthToken() as BasicOAuthToken)
+                        accessTokenListener!!.notify(accessTokenResponse.oAuthToken as BasicOAuthToken)
                     }
                     accessToken != requestAccessToken
                 } else {
