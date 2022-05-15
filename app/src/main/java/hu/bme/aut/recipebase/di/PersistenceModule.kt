@@ -5,7 +5,9 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import hu.bme.aut.recipebase.BuildConfig
 import hu.bme.aut.recipebase.persistence.AppDatabase
 import hu.bme.aut.recipebase.persistence.RecipeDao
 import javax.inject.Singleton
@@ -13,19 +15,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class PersistenceModule {
-    companion object {
-        private const val DB_NAME = "recipes.db"
-    }
-
-    @Provides
     @Singleton
-    fun provideRecipeDao(db: AppDatabase): RecipeDao = db.recipeDao()
-
     @Provides
-    @Singleton
-    fun provideAppDatabase(context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, BuildConfig.DB_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun provideRecipeDao(db: AppDatabase): RecipeDao = db.recipeDao()
 }

@@ -28,7 +28,6 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-@RequiresApi(Build.VERSION_CODES.O)
 class JSON {
     private var gson: Gson
     private val dateTypeAdapter = DateTypeAdapter()
@@ -59,7 +58,7 @@ class JSON {
     /**
      * Gson TypeAdapter for JSR310 OffsetDateTime type
      */
-    class OffsetDateTimeTypeAdapter @RequiresApi(Build.VERSION_CODES.O)
+    class OffsetDateTimeTypeAdapter
     @JvmOverloads constructor(formatter: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME) :
         TypeAdapter<OffsetDateTime?>() {
         private var formatter: DateTimeFormatter
@@ -67,7 +66,6 @@ class JSON {
             formatter = dateFormat
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         @Throws(IOException::class)
         override fun write(out: JsonWriter, date: OffsetDateTime?) {
             if (date == null) {
@@ -77,7 +75,6 @@ class JSON {
             }
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         @Throws(IOException::class)
         override fun read(`in`: JsonReader): OffsetDateTime? {
             return when (`in`.peek()) {
@@ -104,7 +101,6 @@ class JSON {
      * Gson TypeAdapter for JSR310 LocalDate type
      */
     inner class LocalDateTypeAdapter
-    @RequiresApi(Build.VERSION_CODES.O)
     @JvmOverloads constructor(formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE) :
         TypeAdapter<LocalDate?>() {
         private var formatter: DateTimeFormatter
@@ -112,7 +108,6 @@ class JSON {
             formatter = dateFormat
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         @Throws(IOException::class)
         override fun write(out: JsonWriter, date: LocalDate?) {
             if (date == null) {
@@ -122,7 +117,6 @@ class JSON {
             }
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
         @Throws(IOException::class)
         override fun read(`in`: JsonReader): LocalDate? {
             return when (`in`.peek()) {

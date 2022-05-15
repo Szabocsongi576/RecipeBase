@@ -12,7 +12,7 @@ class CollectionFormats {
         }
 
         constructor(vararg params: String?) {
-            this.params = Arrays.asList(*params)
+            this.params = listOf(*params)
         }
 
         override fun toString(): String {
