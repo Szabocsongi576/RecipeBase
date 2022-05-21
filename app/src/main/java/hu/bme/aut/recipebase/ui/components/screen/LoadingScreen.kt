@@ -6,17 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import hu.bme.aut.recipebase.ui.components.app_bar.DefaultAppBar
 
 @Composable
-fun LoadingScreen() {
-    Scaffold {
-        TopAppBar(
-            title = {
-                Text(
-                    text = "Recipes"
-                )
-            },
-        )
+fun LoadingScreen(
+    topBar: @Composable () -> Unit = {
+        DefaultAppBar()
+    },
+) {
+    Scaffold(
+        topBar = topBar
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,

@@ -6,18 +6,6 @@ import retrofit2.http.*
 import java.math.BigDecimal
 
 interface RecipesApi {
-    /*companion object {
-        var api: RecipesApi? = null
-        fun getInstance() : RecipesApi {
-            if (api == null) {
-                api = Retrofit.Builder()
-                    .baseUrl("https://tasty.p.rapidapi.com")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build().create(RecipesApi::class.java)
-            }
-            return api!!
-        }
-    }*/
 
     /**
      * Creates a new Recipe

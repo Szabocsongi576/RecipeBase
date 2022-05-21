@@ -6,8 +6,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.West
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +26,12 @@ import androidx.compose.ui.unit.dp
 import hu.bme.aut.recipebase.network.model.Recipe
 
 @Composable
-fun RecipeListItem(recipe: Recipe = Recipe(), onClick: () -> Unit = {}) {
+fun RecipeListItem(
+    recipe: Recipe = Recipe(),
+    onClick: () -> Unit = {},
+    onDeleteClicked: () -> Unit = {},
+    onEditClicked: () -> Unit = {}
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,6 +51,30 @@ fun RecipeListItem(recipe: Recipe = Recipe(), onClick: () -> Unit = {}) {
             horizontalArrangement = Arrangement.Start,
         ) {
             Text(text = recipe.name ?: "Name", style = typography.h6, color = Color.White)
+        }
+        Row(
+            modifier = Modifier,
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.End,
+        ) {
+            IconButton(
+                onClick = { onEditClicked() }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Edit,
+                    contentDescription = "Edit Icon",
+                    tint = Color.White
+                )
+            }
+            IconButton(
+                onClick = { onDeleteClicked() }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = "Delete Icon",
+                    tint = Color.White
+                )
+            }
         }
     }
 }

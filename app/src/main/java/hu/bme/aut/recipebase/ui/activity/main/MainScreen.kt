@@ -1,59 +1,89 @@
 package hu.bme.aut.recipebase.ui.activity.main
 
 import android.content.Intent
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import hu.bme.aut.recipebase.ui.activity.recipe_details.RecipeDetailsActivity
-import hu.bme.aut.recipebase.ui.activity.recipe_details.RecipeDetailsScreen
-import hu.bme.aut.recipebase.ui.activity.recipe_details.RecipeDetailsViewModel
 import hu.bme.aut.recipebase.ui.components.BottomLoading
+import hu.bme.aut.recipebase.ui.components.Loading
 import hu.bme.aut.recipebase.ui.components.RecipeList
 import hu.bme.aut.recipebase.ui.components.app_bar.MainAppBar
+import hu.bme.aut.recipebase.ui.dialog.add_recipe.AddRecipeDialog
+import hu.bme.aut.recipebase.ui.dialog.add_recipe.AddRecipeDialogViewModel
+import hu.bme.aut.recipebase.ui.dialog.edit_recipe.EditRecipeDialog
+import hu.bme.aut.recipebase.ui.dialog.edit_recipe.EditRecipeDialogViewModel
 import hu.bme.aut.recipebase.ui.state.SearchWidgetState
+import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(viewModel: MainViewModel) {
-    val searchWidgetState by viewModel.searchWidgetState
-    val searchTextState by viewModel.searchTextState
-
-    val recipeListState by viewModel.recipeListState
-    val fetchState by viewModel.fetchState
+fun MainScreen(
+    mainViewModel: MainViewModel,
+    addRecipeDialogViewModel: AddRecipeDialogViewModel,
+    editRecipeDialogViewModel: EditRecipeDialogViewModel,
+) {
+    val searchWidgetState by mainViewModel.searchWidgetState
+    val searchTextState by mainViewModel.searchTextState
+    val recipeListState by mainViewModel.recipeListState
+    val fetchLoadingState by mainViewModel.fetchLoadingState
+    val deleteLoadingState by mainViewModel.deleteLoadingState
 
     val context = LocalContext.current
 
+    val scaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
+    val listState = rememberLazyListState()
+    val openAddRecipeDialog = remember { mutableStateOf(false) }
+
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             MainAppBar(
                 searchWidgetState = searchWidgetState,
                 searchTextState = searchTextState,
                 onTextChange = {
-                    viewModel.updateSearchTextState(newValue = it)
+                    mainViewModel.updateSearchTextState(newValue = it)
                 },
                 onCloseClicked = {
-                    viewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+                    mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.CLOSED)
+                    mainViewModel.searchRecipes(
+                        onError = {
+                            coroutineScope.launch {
+                                scaffoldState.snackbarHostState.showSnackbar(
+                                    message = it,
+                                )
+                            }
+                        }
+                    )
                 },
                 onSearchClicked = {
-                    Log.d("Searched Text", it)
+                    mainViewModel.searchRecipes(
+                        onError = {
+                            coroutineScope.launch {
+                                scaffoldState.snackbarHostState.showSnackbar(
+                                    message = it,
+                                )
+                            }
+                        }
+                    )
                 },
                 onSearchTriggered = {
-                    viewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
+                    mainViewModel.updateSearchWidgetState(newValue = SearchWidgetState.OPENED)
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = {
+                    openAddRecipeDialog.value = true
+                },
                 content = {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -66,18 +96,107 @@ fun MainScreen(viewModel: MainViewModel) {
     ) {
         RecipeList(
             recipes = recipeListState,
-            indexOfFetchTriggerState = viewModel.indexOfFetchTriggerState,
+            indexOfFetchTriggerState = mainViewModel.indexOfFetchTriggerState,
+            enableFetchTriggerState = mainViewModel.enableFetchTriggerState,
+            listState = listState,
             onFetch = {
-                viewModel.fetchRecipes()
+                mainViewModel.fetchRecipes(
+                    onError = {
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = it,
+                            )
+                        }
+                    }
+                )
             },
             onItemClick = {
                 val intent = Intent(context, RecipeDetailsActivity::class.java)
                 intent.putExtra("recipe_id", it.toLong())
+                val id = it
+                val recipe = mainViewModel.recipeListState.value.first { r -> r.id == id }
+
+                intent.putExtra("name", recipe.name)
+                intent.putExtra("image", recipe.thumbnailUrl)
+
+                val components = ArrayList<String>()
+                recipe.getSections()!!.first()
+                    .getComponents()!!.forEach { c -> components.add(c.rawText!!) }
+                intent.putStringArrayListExtra("components", components)
+
+                val instructions = ArrayList<String>()
+                recipe.getInstructions()!!.forEach { i -> instructions.add(i.displayText!!) }
+                intent.putStringArrayListExtra("instructions", instructions)
+
+                val nutrition = recipe.nutrition!!
+                nutrition.sugar?.let { it1 -> intent.putExtra("sugar", it1.toLong()) }
+                nutrition.fat?.let { it1 -> intent.putExtra("fat", it1.toLong()) }
+                nutrition.protein?.let { it1 -> intent.putExtra("protein", it1.toLong()) }
+                nutrition.fiber?.let { it1 -> intent.putExtra("fiber", it1.toLong()) }
+                nutrition.carbohydrates?.let { it1 -> intent.putExtra("carbohydrates", it1.toLong()) }
+                nutrition.calories?.let { it1 -> intent.putExtra("calories", it1.toLong()) }
+
                 context.startActivity(intent)
+            },
+            onItemDeleteClick = {
+                mainViewModel.deleteRecipe(
+                    id = it,
+                    onError = {
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = it,
+                            )
+                        }
+                    }
+                )
+            },
+            onItemEditClicked = {
+                mainViewModel.setSelectedRecipeState(it)
             },
         )
 
-        AnimatedVisibility(visible = fetchState) {
+        if (openAddRecipeDialog.value) {
+            AddRecipeDialog(
+                onDismiss = {
+                    openAddRecipeDialog.value = false
+                },
+                onSave = {
+                    openAddRecipeDialog.value = false
+                    mainViewModel.onRecipeCreated(it)
+                    coroutineScope.launch {
+                        listState.animateScrollToItem(0)
+                    }
+                },
+                viewModel = addRecipeDialogViewModel,
+            )
+        }
+
+        if (mainViewModel.selectedRecipeState.value != null) {
+            editRecipeDialogViewModel.setupRecipe(mainViewModel.selectedRecipeState.value!!)
+            EditRecipeDialog(
+                onDismiss = {
+                    mainViewModel.setSelectedRecipeState(null)
+                },
+                onEdit = {
+                    mainViewModel.onRecipeEdited(it)
+                },
+                viewModel = editRecipeDialogViewModel,
+            )
+        }
+
+        AnimatedVisibility(
+            visible = deleteLoadingState,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            Loading()
+        }
+
+        AnimatedVisibility(
+            visible = fetchLoadingState,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
             BottomLoading()
         }
     }

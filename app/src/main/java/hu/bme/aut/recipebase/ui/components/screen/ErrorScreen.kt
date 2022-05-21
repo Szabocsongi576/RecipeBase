@@ -14,13 +14,14 @@ import androidx.compose.ui.unit.dp
 import hu.bme.aut.recipebase.ui.components.app_bar.DefaultAppBar
 
 @Composable
-fun ErrorScreen(message: String) {
+fun ErrorScreen(
+    message: String,
+    topBar: @Composable () -> Unit = {
+        DefaultAppBar()
+    },
+) {
     Scaffold(
-        topBar = {
-            DefaultAppBar(
-                onSearchClicked = {},
-            )
-        },
+        topBar = topBar,
     ) {
         Column(
             modifier = Modifier

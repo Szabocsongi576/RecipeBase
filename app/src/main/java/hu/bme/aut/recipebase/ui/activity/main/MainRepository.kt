@@ -3,6 +3,7 @@ package hu.bme.aut.recipebase.ui.activity.main
 import hu.bme.aut.recipebase.network.api.RecipesApi
 import hu.bme.aut.recipebase.network.model.RecipeList
 import hu.bme.aut.recipebase.persistence.RecipeDao
+import kotlinx.coroutines.delay
 import java.math.BigDecimal
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,5 +21,9 @@ class MainRepository @Inject constructor(
             tags = "under_30_minutes",
             q = query,
         )
+    }
+
+    suspend fun deleteRecipe(id: BigDecimal) {
+        delay(1000)
     }
 }

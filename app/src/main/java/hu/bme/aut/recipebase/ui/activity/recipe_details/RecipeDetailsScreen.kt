@@ -1,10 +1,6 @@
 package hu.bme.aut.recipebase.ui.activity.recipe_details
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
@@ -21,30 +17,28 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
-import com.google.android.material.color.MaterialColors
 import hu.bme.aut.recipebase.network.model.Recipe
 import hu.bme.aut.recipebase.ui.components.RecipeImage
-import hu.bme.aut.recipebase.ui.components.app_bar.RecipeDetailsAppBar
+import hu.bme.aut.recipebase.ui.components.app_bar.DefaultAppBar
 
 @Composable
-fun RecipeDetailsScreen(viewModel: RecipeDetailsViewModel) {
-    val recipeState by viewModel.recipeState
-
-    val context = LocalContext.current
-
-    Log.i("TAG", recipeState!!.id.toString())
+fun RecipeDetailsScreen(
+    recipeDetailsViewModel: RecipeDetailsViewModel,
+    onBackClicked: () -> Unit,
+) {
+    val recipeState by recipeDetailsViewModel.recipeState
 
     val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
-            RecipeDetailsAppBar(
+            DefaultAppBar(
+                title = "Recipe details",
                 onBackClicked = {
-                    context.onBackPressed()
-                }
+                    onBackClicked()
+                },
             )
         },
     ) {
@@ -87,6 +81,7 @@ fun RecipeDetailsScreen(viewModel: RecipeDetailsViewModel) {
                 modifier = Modifier.padding(8.dp)
             ) {
                 Card(
+                    modifier = Modifier.fillMaxWidth(),
                     backgroundColor = Color.LightGray,
                     shape = RoundedCornerShape(corner = CornerSize(16.dp))
                 ) {
@@ -193,36 +188,6 @@ fun Nutrition(recipeState: Recipe) {
                     style = MaterialTheme.typography.body1,
                 )
             }
-            if (recipeState.nutrition?.fiber != null) {
-                Text(
-                    buildAnnotatedString {
-                        append(bullet)
-                        append("\t\t")
-                        append("Fiber: ${recipeState.nutrition!!.fiber!!}")
-                    },
-                    style = MaterialTheme.typography.body1,
-                )
-            }
-            if (recipeState.nutrition?.calories != null) {
-                Text(
-                    buildAnnotatedString {
-                        append(bullet)
-                        append("\t\t")
-                        append("Calories: ${recipeState.nutrition!!.calories!!}")
-                    },
-                    style = MaterialTheme.typography.body1,
-                )
-            }
-            if (recipeState.nutrition?.carbohydrates != null) {
-                Text(
-                    buildAnnotatedString {
-                        append(bullet)
-                        append("\t\t")
-                        append("Carbohydrates: ${recipeState.nutrition!!.carbohydrates!!}")
-                    },
-                    style = MaterialTheme.typography.body1,
-                )
-            }
             if (recipeState.nutrition?.fat != null) {
                 Text(
                     buildAnnotatedString {
@@ -239,6 +204,36 @@ fun Nutrition(recipeState: Recipe) {
                         append(bullet)
                         append("\t\t")
                         append("Protein: ${recipeState.nutrition!!.protein!!}")
+                    },
+                    style = MaterialTheme.typography.body1,
+                )
+            }
+            if (recipeState.nutrition?.fiber != null) {
+                Text(
+                    buildAnnotatedString {
+                        append(bullet)
+                        append("\t\t")
+                        append("Fiber: ${recipeState.nutrition!!.fiber!!}")
+                    },
+                    style = MaterialTheme.typography.body1,
+                )
+            }
+            if (recipeState.nutrition?.carbohydrates != null) {
+                Text(
+                    buildAnnotatedString {
+                        append(bullet)
+                        append("\t\t")
+                        append("Carbohydrates: ${recipeState.nutrition!!.carbohydrates!!}")
+                    },
+                    style = MaterialTheme.typography.body1,
+                )
+            }
+            if (recipeState.nutrition?.calories != null) {
+                Text(
+                    buildAnnotatedString {
+                        append(bullet)
+                        append("\t\t")
+                        append("Calories: ${recipeState.nutrition!!.calories!!}")
                     },
                     style = MaterialTheme.typography.body1,
                 )

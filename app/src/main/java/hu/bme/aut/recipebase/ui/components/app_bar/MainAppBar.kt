@@ -9,13 +9,14 @@ fun MainAppBar(
     searchTextState: String,
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
-    onSearchClicked: (String) -> Unit,
+    onSearchClicked: () -> Unit,
     onSearchTriggered: () -> Unit
 ) {
     when (searchWidgetState) {
         SearchWidgetState.CLOSED -> {
             DefaultAppBar(
-                onSearchClicked = onSearchTriggered
+                onSearchClicked = onSearchTriggered,
+                title = "Recipes"
             )
         }
         SearchWidgetState.OPENED -> {
