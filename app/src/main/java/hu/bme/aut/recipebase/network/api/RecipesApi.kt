@@ -41,8 +41,8 @@ interface RecipesApi {
      */
     @GET("recipes/list")
     suspend fun getAllRecipes(
-        @retrofit2.http.Query("from") from: BigDecimal?,
-        @retrofit2.http.Query("size") size: BigDecimal?,
+        @retrofit2.http.Query("from") from: Long?,
+        @retrofit2.http.Query("size") size: Long?,
         @retrofit2.http.Query("tags") tags: String?,
         @retrofit2.http.Query("q") q: String?
     ): RecipeList?

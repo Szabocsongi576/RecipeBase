@@ -10,12 +10,14 @@ fun MainAppBar(
     onTextChange: (String) -> Unit,
     onCloseClicked: () -> Unit,
     onSearchClicked: () -> Unit,
+    onFavoritesClicked: () -> Unit,
     onSearchTriggered: () -> Unit
 ) {
     when (searchWidgetState) {
         SearchWidgetState.CLOSED -> {
             DefaultAppBar(
                 onSearchClicked = onSearchTriggered,
+                onFavoritesClicked = onFavoritesClicked,
                 title = "Recipes"
             )
         }

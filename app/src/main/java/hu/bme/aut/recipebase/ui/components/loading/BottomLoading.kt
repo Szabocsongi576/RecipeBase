@@ -1,4 +1,4 @@
-package hu.bme.aut.recipebase.ui.components
+package hu.bme.aut.recipebase.ui.components.loading
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator

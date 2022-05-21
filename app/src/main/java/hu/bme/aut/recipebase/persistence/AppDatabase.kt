@@ -8,20 +8,7 @@ import hu.bme.aut.recipebase.persistence.model.*
 
 @Database(
     entities = [
-        DbComponent::class,
-        DbCredit::class,
-        DbIngredient::class,
-        DbInstruction::class,
-        DbMeasurement::class,
-        DbNutrition::class,
         DbRecipe::class,
-        DbSection::class,
-        DbShow::class,
-        DbTag::class,
-        DbTopics::class,
-        DbTotalTimeTier::class,
-        DbUnit::class,
-        DbUserRating::class,
     ], version = 1, exportSchema = false
 )
 @TypeConverters(Converters::class)

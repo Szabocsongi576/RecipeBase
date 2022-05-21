@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
-import hu.bme.aut.recipebase.ui.components.ErrorScreen
-import hu.bme.aut.recipebase.ui.components.LoadingScreen
-import hu.bme.aut.recipebase.ui.components.NoDataScreen
 import hu.bme.aut.recipebase.ui.components.app_bar.DefaultAppBar
+import hu.bme.aut.recipebase.ui.components.screen.ErrorScreen
+import hu.bme.aut.recipebase.ui.components.screen.LoadingScreen
+import hu.bme.aut.recipebase.ui.components.screen.NoDataScreen
 import hu.bme.aut.recipebase.ui.dialog.add_recipe.AddRecipeDialogViewModel
 import hu.bme.aut.recipebase.ui.dialog.edit_recipe.EditRecipeDialogViewModel
 import hu.bme.aut.recipebase.ui.state.UiState

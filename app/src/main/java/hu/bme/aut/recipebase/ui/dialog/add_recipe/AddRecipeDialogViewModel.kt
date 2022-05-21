@@ -8,7 +8,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.bme.aut.recipebase.network.model.*
 import hu.bme.aut.recipebase.ui.state.ErrorState
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -95,7 +94,14 @@ class AddRecipeDialogViewModel @Inject constructor(
     private fun validate(): String {
         var error = ""
 
+        if (_nameTextState.value.isEmpty()) {
+            error += "Name field is required"
+        }
+
         if (_componentsTextState.value.isEmpty()) {
+            if (error.isNotEmpty()) {
+                error += "\n"
+            }
             error += "Components field is required"
         }
 
@@ -108,7 +114,7 @@ class AddRecipeDialogViewModel @Inject constructor(
 
         if(_sugarTextState.value.isNotEmpty()) {
             try {
-                BigDecimal(_sugarTextState.value)
+                _sugarTextState.value.toLong()
             } catch (e: NumberFormatException) {
                 if (error.isNotEmpty()) {
                     error += "\n"
@@ -118,7 +124,7 @@ class AddRecipeDialogViewModel @Inject constructor(
         }
         if(_fatTextState.value.isNotEmpty()) {
             try {
-                BigDecimal(_fatTextState.value)
+                _fatTextState.value.toLong()
             } catch (e: NumberFormatException) {
                 if (error.isNotEmpty()) {
                     error += "\n"
@@ -128,7 +134,7 @@ class AddRecipeDialogViewModel @Inject constructor(
         }
         if(_proteinTextState.value.isNotEmpty()) {
             try {
-                BigDecimal(_proteinTextState.value)
+                _proteinTextState.value.toLong()
             } catch (e: NumberFormatException) {
                 if (error.isNotEmpty()) {
                     error += "\n"
@@ -138,7 +144,7 @@ class AddRecipeDialogViewModel @Inject constructor(
         }
         if(_fiberTextState.value.isNotEmpty()) {
             try {
-                BigDecimal(_fiberTextState.value)
+                _fiberTextState.value.toLong()
             } catch (e: NumberFormatException) {
                 if (error.isNotEmpty()) {
                     error += "\n"
@@ -148,7 +154,7 @@ class AddRecipeDialogViewModel @Inject constructor(
         }
         if(_carbohydratesTextState.value.isNotEmpty()) {
             try {
-                BigDecimal(_carbohydratesTextState.value)
+                _carbohydratesTextState.value.toLong()
             } catch (e: NumberFormatException) {
                 if (error.isNotEmpty()) {
                     error += "\n"
@@ -158,7 +164,7 @@ class AddRecipeDialogViewModel @Inject constructor(
         }
         if(_caloriesTextState.value.isNotEmpty()) {
             try {
-                BigDecimal(_caloriesTextState.value)
+                _caloriesTextState.value.toLong()
             } catch (e: NumberFormatException) {
                 if (error.isNotEmpty()) {
                     error += "\n"
@@ -184,7 +190,7 @@ class AddRecipeDialogViewModel @Inject constructor(
 
             try {
                 val recipe = Recipe()
-                recipe.id = BigDecimal(Random.nextInt(from = 100000, until = Int.MAX_VALUE))
+                recipe.id = Random.nextLong(from = 100000, until = Long.MAX_VALUE)
                 recipe.name = _nameTextState.value
 
                 val section = Section()
@@ -193,7 +199,7 @@ class AddRecipeDialogViewModel @Inject constructor(
                     .split("\n")
                     .forEach {
                         val component = Component()
-                        component.rawText = it.substring("\u2022 ".length)
+                        component.rawText = it
                         components.add(component)
                     }
 
@@ -205,23 +211,36 @@ class AddRecipeDialogViewModel @Inject constructor(
                     .split("\n")
                     .forEach {
                         val instruction = Instruction()
-                        instruction.displayText = it.substring("\u2022 ".length)
+                        instruction.displayText = it
                         instructions.add(instruction)
                     }
 
                 recipe.setInstructions(instructions)
 
                 val nutrition = Nutrition()
-                nutrition.sugar = BigDecimal(_sugarTextState.value)
-                nutrition.fat = BigDecimal(_fatTextState.value)
-                nutrition.protein = BigDecimal(_proteinTextState.value)
-                nutrition.fiber = BigDecimal(_fiberTextState.value)
-                nutrition.carbohydrates = BigDecimal(_carbohydratesTextState.value)
-                nutrition.calories = BigDecimal(_caloriesTextState.value)
+
+                if (_sugarTextState.value.isNotEmpty()) {
+                    nutrition.sugar = _sugarTextState.value.toLong()
+                }
+                if (_fatTextState.value.isNotEmpty()) {
+                    nutrition.fat = _fatTextState.value.toLong()
+                }
+                if (_proteinTextState.value.isNotEmpty()) {
+                    nutrition.protein = _proteinTextState.value.toLong()
+                }
+                if (_fiberTextState.value.isNotEmpty()) {
+                    nutrition.fiber = _fiberTextState.value.toLong()
+                }
+                if (_carbohydratesTextState.value.isNotEmpty()) {
+                    nutrition.carbohydrates = _carbohydratesTextState.value.toLong()
+                }
+                if (_caloriesTextState.value.isNotEmpty()) {
+                    nutrition.calories = _caloriesTextState.value.toLong()
+                }
 
                 recipe.nutrition = nutrition
 
-                val response = repository.createRecipe(recipe)
+                repository.createRecipe(recipe)
 
                 onSuccess(recipe)
 

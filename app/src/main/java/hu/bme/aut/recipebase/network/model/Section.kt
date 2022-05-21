@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -38,7 +37,7 @@ class Section {
      */
     @get:ApiModelProperty(example = "1.0", value = "")
     @SerializedName("position")
-    var position: BigDecimal? = null
+    var position: Long? = null
     fun components(components: MutableList<Component>?): Section {
         this.components = components
         return this
@@ -70,7 +69,7 @@ class Section {
         return this
     }
 
-    fun position(position: BigDecimal?): Section {
+    fun position(position: Long?): Section {
         this.position = position
         return this
     }

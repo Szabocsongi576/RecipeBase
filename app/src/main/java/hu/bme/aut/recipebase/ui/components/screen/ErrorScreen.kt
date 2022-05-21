@@ -1,4 +1,4 @@
-package hu.bme.aut.recipebase.ui.components
+package hu.bme.aut.recipebase.ui.components.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme

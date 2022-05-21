@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import hu.bme.aut.recipebase.network.model.Recipe
 import hu.bme.aut.recipebase.ui.components.ErrorDialog
-import hu.bme.aut.recipebase.ui.components.Loading
+import hu.bme.aut.recipebase.ui.components.loading.Loading
 import hu.bme.aut.recipebase.ui.state.ErrorState
 import hu.bme.aut.recipebase.ui.transformation.UnorderedListTransformation
 
@@ -77,7 +77,6 @@ fun EditRecipeDialog(
                         onValueChange = {
                             viewModel.updateComponentsTextState(it)
                         },
-                        visualTransformation = UnorderedListTransformation("\u2022 "),
                     )
                     Text("Instructions")
                     OutlinedTextField(
@@ -86,7 +85,6 @@ fun EditRecipeDialog(
                         onValueChange = {
                             viewModel.updateInstructionsTextState(it)
                         },
-                        visualTransformation = UnorderedListTransformation("\u2022 "),
                     )
                     Text("Nutrition")
                     Column(

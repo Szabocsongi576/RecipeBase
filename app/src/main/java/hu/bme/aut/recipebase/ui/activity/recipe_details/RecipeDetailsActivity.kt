@@ -61,7 +61,7 @@ class RecipeDetailsActivity : ComponentActivity() {
         val caloriesExtra = intent.getLongExtra("calories", -1)
 
         val recipe = Recipe()
-        recipe.id = BigDecimal(recipeId)
+        recipe.id = recipeId
         recipe.name = nameExtra
         recipe.thumbnailUrl = imageExtra
 
@@ -87,22 +87,22 @@ class RecipeDetailsActivity : ComponentActivity() {
 
         val nutrition = Nutrition()
         if(sugarExtra != (-1).toLong()) {
-            nutrition.sugar = BigDecimal(sugarExtra)
+            nutrition.sugar = sugarExtra
         }
         if(fatExtra != (-1).toLong()) {
-            nutrition.fat = BigDecimal(fatExtra)
+            nutrition.fat = fatExtra
         }
         if(proteinExtra != (-1).toLong()) {
-            nutrition.protein = BigDecimal(proteinExtra)
+            nutrition.protein = proteinExtra
         }
         if(fiberExtra != (-1).toLong()) {
-            nutrition.fiber = BigDecimal(fiberExtra)
+            nutrition.fiber = fiberExtra
         }
         if(carbohydratesExtra != (-1).toLong()) {
-            nutrition.carbohydrates = BigDecimal(carbohydratesExtra)
+            nutrition.carbohydrates = carbohydratesExtra
         }
         if(caloriesExtra != (-1).toLong()) {
-            nutrition.calories = BigDecimal(caloriesExtra)
+            nutrition.calories = caloriesExtra
         }
 
         recipe.nutrition = nutrition

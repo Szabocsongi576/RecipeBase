@@ -13,7 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.West
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,14 +24,17 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hu.bme.aut.recipebase.network.model.Recipe
+import hu.bme.aut.recipebase.ui.theme.Primary
 
 @Composable
 fun RecipeListItem(
     recipe: Recipe = Recipe(),
+    isFavorite: Boolean = false,
     onClick: () -> Unit = {},
     onDeleteClicked: () -> Unit = {},
-    onEditClicked: () -> Unit = {}
-) {
+    onEditClicked: () -> Unit = {},
+    onAddToFavoriteClicked: () -> Unit = {}
+){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,28 +56,44 @@ fun RecipeListItem(
             Text(text = recipe.name ?: "Name", style = typography.h6, color = Color.White)
         }
         Row(
-            modifier = Modifier,
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.End,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             IconButton(
-                onClick = { onEditClicked() }
+                onClick = { onAddToFavoriteClicked() }
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Edit,
-                    contentDescription = "Edit Icon",
-                    tint = Color.White
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "Favorite Icon",
+                    tint = if(isFavorite) Primary else Color.White
                 )
             }
-            IconButton(
-                onClick = { onDeleteClicked() }
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.End,
             ) {
-                Icon(
-                    imageVector = Icons.Filled.Delete,
-                    contentDescription = "Delete Icon",
-                    tint = Color.White
-                )
+                IconButton(
+                    onClick = { onEditClicked() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = "Edit Icon",
+                        tint = Color.White
+                    )
+                }
+                IconButton(
+                    onClick = { onDeleteClicked() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Delete,
+                        contentDescription = "Delete Icon",
+                        tint = Color.White
+                    )
+                }
             }
+
         }
     }
 }
