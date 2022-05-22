@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -43,7 +42,7 @@ class Measurement {
      */
     @get:ApiModelProperty(example = "689155.0", value = "")
     @SerializedName("id")
-    var id: BigDecimal? = null
+    var id: Long? = null
     fun unit(unit: Unit?): Measurement {
         this.unit = unit
         return this
@@ -54,7 +53,7 @@ class Measurement {
         return this
     }
 
-    fun id(id: BigDecimal?): Measurement {
+    fun id(id: Long?): Measurement {
         this.id = id
         return this
     }

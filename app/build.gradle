@@ -82,7 +82,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.6.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
     implementation "io.reactivex:rxjava:1.3.8"
     implementation "io.swagger:swagger-annotations:1.5.24"
     implementation ("org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.1"){
@@ -107,6 +107,9 @@ dependencies {
 
     // MockK - Mocks
     testImplementation "io.mockk:mockk:1.9.3"
+
+    // Google Truth - Asserts
+    testImplementation "com.google.truth:truth:1.1.3"
 
     // JUnit - UI Test Framework
     testImplementation 'junit:junit:4.13.2'

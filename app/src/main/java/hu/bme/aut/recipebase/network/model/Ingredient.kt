@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -27,7 +26,7 @@ class Ingredient {
      */
     @get:ApiModelProperty(example = "3701.0", value = "")
     @SerializedName("id")
-    var id: BigDecimal? = null
+    var id: Long? = null
 
     /**
      * Get displaySingular
@@ -43,7 +42,7 @@ class Ingredient {
      */
     @get:ApiModelProperty(example = "1.518533142E9", value = "")
     @SerializedName("updated_at")
-    var updatedAt: BigDecimal? = null
+    var updatedAt: Long? = null
 
     /**
      * Get name
@@ -59,7 +58,7 @@ class Ingredient {
      */
     @get:ApiModelProperty(example = "1.518533142E9", value = "")
     @SerializedName("created_at")
-    var createdAt: BigDecimal? = null
+    var createdAt: Long? = null
 
     /**
      * Get displayPlural
@@ -68,7 +67,7 @@ class Ingredient {
     @get:ApiModelProperty(example = "bagels", value = "")
     @SerializedName("display_plural")
     var displayPlural: String? = null
-    fun id(id: BigDecimal?): Ingredient {
+    fun id(id: Long?): Ingredient {
         this.id = id
         return this
     }
@@ -78,7 +77,7 @@ class Ingredient {
         return this
     }
 
-    fun updatedAt(updatedAt: BigDecimal?): Ingredient {
+    fun updatedAt(updatedAt: Long?): Ingredient {
         this.updatedAt = updatedAt
         return this
     }
@@ -88,7 +87,7 @@ class Ingredient {
         return this
     }
 
-    fun createdAt(createdAt: BigDecimal?): Ingredient {
+    fun createdAt(createdAt: Long?): Ingredient {
         this.createdAt = createdAt
         return this
     }

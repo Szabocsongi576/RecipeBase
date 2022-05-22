@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -57,7 +56,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "5.0", value = "")
     @SerializedName("prep_time_minutes")
-    var prepTimeMinutes: BigDecimal? = null
+    var prepTimeMinutes: Long? = null
 
     @SerializedName("sections")
     private var sections: MutableList<Section>? = null
@@ -106,7 +105,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "1.651250458E9", value = "")
     @SerializedName("updated_at")
-    var updatedAt: BigDecimal? = null
+    var updatedAt: Long? = null
 
     /**
      * Get videoId
@@ -154,7 +153,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "17.0", value = "")
     @SerializedName("show_id")
-    var showId: BigDecimal? = null
+    var showId: Long? = null
 
     /**
      * Get numServings
@@ -162,7 +161,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "1.0", value = "")
     @SerializedName("num_servings")
-    var numServings: BigDecimal? = null
+    var numServings: Long? = null
 
     /**
      * Get thumbnailUrl
@@ -221,7 +220,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "10.0", value = "")
     @SerializedName("total_time_minutes")
-    var totalTimeMinutes: BigDecimal? = null
+    var totalTimeMinutes: Long? = null
 
     /**
      * Get approvedAt
@@ -229,7 +228,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "1.651250457E9", value = "")
     @SerializedName("approved_at")
-    var approvedAt: BigDecimal? = null
+    var approvedAt: Long? = null
 
     /**
      * Get servingsNounPlural
@@ -253,7 +252,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "8211.0", value = "")
     @SerializedName("id")
-    var id: BigDecimal? = null
+    var id: Long? = null
 
     /**
      * Get name
@@ -296,7 +295,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "5.0", value = "")
     @SerializedName("cook_time_minutes")
-    var cookTimeMinutes: BigDecimal? = null
+    var cookTimeMinutes: Long? = null
 
     /**
      * Get createdAt
@@ -304,7 +303,7 @@ class Recipe {
      */
     @get:ApiModelProperty(example = "1.651247675E9", value = "")
     @SerializedName("created_at")
-    var createdAt: BigDecimal? = null
+    var createdAt: Long? = null
 
     /**
      * Get videoUrl
@@ -442,7 +441,7 @@ class Recipe {
         return this
     }
 
-    fun prepTimeMinutes(prepTimeMinutes: BigDecimal?): Recipe {
+    fun prepTimeMinutes(prepTimeMinutes: Long?): Recipe {
         this.prepTimeMinutes = prepTimeMinutes
         return this
     }
@@ -519,7 +518,7 @@ class Recipe {
         return this
     }
 
-    fun updatedAt(updatedAt: BigDecimal?): Recipe {
+    fun updatedAt(updatedAt: Long?): Recipe {
         this.updatedAt = updatedAt
         return this
     }
@@ -549,12 +548,12 @@ class Recipe {
         return this
     }
 
-    fun showId(showId: BigDecimal?): Recipe {
+    fun showId(showId: Long?): Recipe {
         this.showId = showId
         return this
     }
 
-    fun numServings(numServings: BigDecimal?): Recipe {
+    fun numServings(numServings: Long?): Recipe {
         this.numServings = numServings
         return this
     }
@@ -589,12 +588,12 @@ class Recipe {
         return this
     }
 
-    fun totalTimeMinutes(totalTimeMinutes: BigDecimal?): Recipe {
+    fun totalTimeMinutes(totalTimeMinutes: Long?): Recipe {
         this.totalTimeMinutes = totalTimeMinutes
         return this
     }
 
-    fun approvedAt(approvedAt: BigDecimal?): Recipe {
+    fun approvedAt(approvedAt: Long?): Recipe {
         this.approvedAt = approvedAt
         return this
     }
@@ -609,7 +608,7 @@ class Recipe {
         return this
     }
 
-    fun id(id: BigDecimal?): Recipe {
+    fun id(id: Long?): Recipe {
         this.id = id
         return this
     }
@@ -660,12 +659,12 @@ class Recipe {
         return this
     }
 
-    fun cookTimeMinutes(cookTimeMinutes: BigDecimal?): Recipe {
+    fun cookTimeMinutes(cookTimeMinutes: Long?): Recipe {
         this.cookTimeMinutes = cookTimeMinutes
         return this
     }
 
-    fun createdAt(createdAt: BigDecimal?): Recipe {
+    fun createdAt(createdAt: Long?): Recipe {
         this.createdAt = createdAt
         return this
     }

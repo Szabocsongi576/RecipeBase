@@ -27,7 +27,7 @@ class UserRating {
      */
     @get:ApiModelProperty(example = "0.0", value = "")
     @SerializedName("count_positive")
-    var countPositive: BigDecimal? = null
+    var countPositive: Long? = null
 
     /**
      * Get score
@@ -43,8 +43,8 @@ class UserRating {
      */
     @get:ApiModelProperty(example = "0.0", value = "")
     @SerializedName("count_negative")
-    var countNegative: BigDecimal? = null
-    fun countPositive(countPositive: BigDecimal?): UserRating {
+    var countNegative: Long? = null
+    fun countPositive(countPositive: Long?): UserRating {
         this.countPositive = countPositive
         return this
     }
@@ -54,7 +54,7 @@ class UserRating {
         return this
     }
 
-    fun countNegative(countNegative: BigDecimal?): UserRating {
+    fun countNegative(countNegative: Long?): UserRating {
         this.countNegative = countNegative
         return this
     }
