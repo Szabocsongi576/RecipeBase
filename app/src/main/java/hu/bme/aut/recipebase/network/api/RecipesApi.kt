@@ -6,30 +6,18 @@ import retrofit2.http.*
 import java.math.BigDecimal
 
 interface RecipesApi {
-    /*companion object {
-        var api: RecipesApi? = null
-        fun getInstance() : RecipesApi {
-            if (api == null) {
-                api = Retrofit.Builder()
-                    .baseUrl("https://tasty.p.rapidapi.com")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build().create(RecipesApi::class.java)
-            }
-            return api!!
-        }
-    }*/
 
     /**
      * Creates a new Recipe
      *
      * @param body The Recipe to create (required)
-     * @return Void&gt;
+     * @return String&gt;
      */
     @Headers("Content-Type:application/json")
     @POST("recipes")
     suspend fun createNewRecipe(
         @retrofit2.http.Body body: Recipe?
-    ): Void?
+    ): Long
 
     /**
      * Deletes a Recipe
@@ -40,7 +28,7 @@ interface RecipesApi {
     @DELETE("recipes/{Id}")
     suspend fun deleteRecipe(
         @retrofit2.http.Path("Id") id: Long?
-    ): Void?
+    )
 
     /**
      * Returns all Recipes
@@ -53,8 +41,8 @@ interface RecipesApi {
      */
     @GET("recipes/list")
     suspend fun getAllRecipes(
-        @retrofit2.http.Query("from") from: BigDecimal?,
-        @retrofit2.http.Query("size") size: BigDecimal?,
+        @retrofit2.http.Query("from") from: Long?,
+        @retrofit2.http.Query("size") size: Long?,
         @retrofit2.http.Query("tags") tags: String?,
         @retrofit2.http.Query("q") q: String?
     ): RecipeList?
@@ -81,5 +69,5 @@ interface RecipesApi {
     @PUT("recipes/{Id}")
     suspend fun updateRecipe(
         @retrofit2.http.Path("Id") id: Long?, @retrofit2.http.Body body: Recipe?
-    ): Void?
+    )
 }

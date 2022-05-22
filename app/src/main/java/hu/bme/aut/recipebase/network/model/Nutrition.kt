@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -30,7 +29,7 @@ class Nutrition {
      */
     @get:ApiModelProperty(example = "12.0", value = "")
     @SerializedName("protein")
-    var protein: BigDecimal? = null
+    var protein: Long? = null
 
     /**
      * Get fat
@@ -38,7 +37,7 @@ class Nutrition {
      */
     @get:ApiModelProperty(example = "12.0", value = "")
     @SerializedName("fat")
-    var fat: BigDecimal? = null
+    var fat: Long? = null
 
     /**
      * Get calories
@@ -46,7 +45,7 @@ class Nutrition {
      */
     @get:ApiModelProperty(example = "557.0", value = "")
     @SerializedName("calories")
-    var calories: BigDecimal? = null
+    var calories: Long? = null
 
     /**
      * Get sugar
@@ -54,7 +53,7 @@ class Nutrition {
      */
     @get:ApiModelProperty(example = "54.0", value = "")
     @SerializedName("sugar")
-    var sugar: BigDecimal? = null
+    var sugar: Long? = null
 
     /**
      * Get carbohydrates
@@ -62,7 +61,7 @@ class Nutrition {
      */
     @get:ApiModelProperty(example = "103.0", value = "")
     @SerializedName("carbohydrates")
-    var carbohydrates: BigDecimal? = null
+    var carbohydrates: Long? = null
 
     /**
      * Get fiber
@@ -70,7 +69,7 @@ class Nutrition {
      */
     @get:ApiModelProperty(example = "32.0", value = "")
     @SerializedName("fiber")
-    var fiber: BigDecimal? = null
+    var fiber: Long? = null
     fun updatedAt(updatedAt: Date?): Nutrition {
         this.updatedAt = updatedAt
         return this
@@ -89,32 +88,32 @@ class Nutrition {
         this.updatedAt = updatedAt
     }
 
-    fun protein(protein: BigDecimal?): Nutrition {
+    fun protein(protein: Long?): Nutrition {
         this.protein = protein
         return this
     }
 
-    fun fat(fat: BigDecimal?): Nutrition {
+    fun fat(fat: Long?): Nutrition {
         this.fat = fat
         return this
     }
 
-    fun calories(calories: BigDecimal?): Nutrition {
+    fun calories(calories: Long?): Nutrition {
         this.calories = calories
         return this
     }
 
-    fun sugar(sugar: BigDecimal?): Nutrition {
+    fun sugar(sugar: Long?): Nutrition {
         this.sugar = sugar
         return this
     }
 
-    fun carbohydrates(carbohydrates: BigDecimal?): Nutrition {
+    fun carbohydrates(carbohydrates: Long?): Nutrition {
         this.carbohydrates = carbohydrates
         return this
     }
 
-    fun fiber(fiber: BigDecimal?): Nutrition {
+    fun fiber(fiber: Long?): Nutrition {
         this.fiber = fiber
         return this
     }

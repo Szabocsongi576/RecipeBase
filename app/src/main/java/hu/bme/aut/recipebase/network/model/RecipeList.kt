@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -27,11 +26,11 @@ class RecipeList {
      */
     @get:ApiModelProperty(example = "1556.0", value = "")
     @SerializedName("count")
-    var count: BigDecimal? = null
+    var count: Long? = null
 
     @SerializedName("results")
     private var results: MutableList<Recipe>? = null
-    fun count(count: BigDecimal?): RecipeList {
+    fun count(count: Long?): RecipeList {
         this.count = count
         return this
     }

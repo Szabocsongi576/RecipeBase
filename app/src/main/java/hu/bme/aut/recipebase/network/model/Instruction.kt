@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -27,7 +26,7 @@ class Instruction {
      */
     @get:ApiModelProperty(example = "0.0", value = "")
     @SerializedName("start_time")
-    var startTime: BigDecimal? = null
+    var startTime: Long? = null
 
     /**
      * Get appliance
@@ -43,7 +42,7 @@ class Instruction {
      */
     @get:ApiModelProperty(example = "0.0", value = "")
     @SerializedName("end_time")
-    var endTime: BigDecimal? = null
+    var endTime: Long? = null
 
     /**
      * Get temperature
@@ -59,7 +58,7 @@ class Instruction {
      */
     @get:ApiModelProperty(example = "71444.0", value = "")
     @SerializedName("id")
-    var id: BigDecimal? = null
+    var id: Long? = null
 
     /**
      * Get position
@@ -67,7 +66,7 @@ class Instruction {
      */
     @get:ApiModelProperty(example = "1.0", value = "")
     @SerializedName("position")
-    var position: BigDecimal? = null
+    var position: Long? = null
 
     /**
      * Get displayText
@@ -79,7 +78,7 @@ class Instruction {
     )
     @SerializedName("display_text")
     var displayText: String? = null
-    fun startTime(startTime: BigDecimal?): Instruction {
+    fun startTime(startTime: Long?): Instruction {
         this.startTime = startTime
         return this
     }
@@ -89,7 +88,7 @@ class Instruction {
         return this
     }
 
-    fun endTime(endTime: BigDecimal?): Instruction {
+    fun endTime(endTime: Long?): Instruction {
         this.endTime = endTime
         return this
     }
@@ -99,12 +98,12 @@ class Instruction {
         return this
     }
 
-    fun id(id: BigDecimal?): Instruction {
+    fun id(id: Long?): Instruction {
         this.id = id
         return this
     }
 
-    fun position(position: BigDecimal?): Instruction {
+    fun position(position: Long?): Instruction {
         this.position = position
         return this
     }

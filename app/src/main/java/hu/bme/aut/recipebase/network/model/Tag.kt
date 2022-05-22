@@ -14,7 +14,6 @@ package hu.bme.aut.recipebase.network.model
 import com.google.gson.annotations.SerializedName
 import io.swagger.annotations.ApiModelProperty
 import java.lang.StringBuilder
-import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -35,7 +34,7 @@ class Tag {
      */
     @get:ApiModelProperty(example = "64489.0", value = "")
     @SerializedName("id")
-    var id: BigDecimal? = null
+    var id: Long? = null
 
     /**
      * Get displayName
@@ -57,7 +56,7 @@ class Tag {
         return this
     }
 
-    fun id(id: BigDecimal?): Tag {
+    fun id(id: Long?): Tag {
         this.id = id
         return this
     }
