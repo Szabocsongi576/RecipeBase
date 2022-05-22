@@ -11,13 +11,13 @@ interface RecipesApi {
      * Creates a new Recipe
      *
      * @param body The Recipe to create (required)
-     * @return Void&gt;
+     * @return String&gt;
      */
     @Headers("Content-Type:application/json")
     @POST("recipes")
     suspend fun createNewRecipe(
         @retrofit2.http.Body body: Recipe?
-    ): Void?
+    ): Long
 
     /**
      * Deletes a Recipe
@@ -28,7 +28,7 @@ interface RecipesApi {
     @DELETE("recipes/{Id}")
     suspend fun deleteRecipe(
         @retrofit2.http.Path("Id") id: Long?
-    ): Void?
+    )
 
     /**
      * Returns all Recipes
@@ -69,5 +69,5 @@ interface RecipesApi {
     @PUT("recipes/{Id}")
     suspend fun updateRecipe(
         @retrofit2.http.Path("Id") id: Long?, @retrofit2.http.Body body: Recipe?
-    ): Void?
+    )
 }

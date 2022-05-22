@@ -49,8 +49,12 @@ class MainViewModel @Inject constructor(
     val showOnlyFavoritesState: State<Boolean> = _showOnlyFavoritesState
 
     init {
+        init()
+    }
+
+    fun init() {
         viewModelScope.launch {
-            try {
+            //try {
                 val fetchResponse = repository.fetchRecipes(
                     query = searchTextState.value,
                     from = _fetchFromState.value,
@@ -58,18 +62,16 @@ class MainViewModel @Inject constructor(
                 )
 
                 val currentList: List<Recipe> = _recipeListState.value
-                _recipeListState.value = currentList.plus(fetchResponse!!.getResults()!!)
+                _recipeListState.value = currentList.plus(fetchResponse.getResults()!!)
 
                 onRecipesFetched()
 
-                withContext(Dispatchers.IO) {
-                    _favoriteListState.value = repository.readAllFavorite()
-                }
+                _favoriteListState.value = repository.readAllFavorite()
 
                 _uiState.value = UiState.Loaded
-            } catch (e: Exception) {
-                _uiState.value = UiState.Error(e.message.toString())
-            }
+           // } catch (e: Exception) {
+            //    _uiState.value = UiState.Error(e.message.toString())
+            //}
         }
     }
 
@@ -103,7 +105,7 @@ class MainViewModel @Inject constructor(
                 )
 
                 val currentList: List<Recipe> = _recipeListState.value
-                _recipeListState.value = currentList.plus(response!!.getResults()!!)
+                _recipeListState.value = currentList.plus(response.getResults()!!)
 
                 onRecipesFetched()
             } catch (e: Exception) {
@@ -133,7 +135,7 @@ class MainViewModel @Inject constructor(
                 )
 
                 val currentList: List<Recipe> = _recipeListState.value
-                _recipeListState.value = currentList.plus(response!!.getResults()!!)
+                _recipeListState.value = currentList.plus(response.getResults()!!)
 
                 onRecipesFetched()
             } catch (e: Exception) {
@@ -161,9 +163,7 @@ class MainViewModel @Inject constructor(
                 _recipeListState.value = currentList.filter { it.id != recipe.id!! }
 
                 if(_favoriteListState.value.find { it.id == recipe.id } != null) {
-                    withContext(Dispatchers.IO) {
-                        repository.deleteFavorite(recipe)
-                    }
+                    repository.deleteFavorite(recipe)
 
                     val favorites: List<Recipe> = _favoriteListState.value
                     _favoriteListState.value = favorites.filter { it.id != recipe.id }
@@ -183,20 +183,14 @@ class MainViewModel @Inject constructor(
         onError: (message: String) -> Unit,
     ) {
         viewModelScope.launch {
-            _centerLoadingState.value = true
-
             try {
-                withContext(Dispatchers.IO) {
-                    repository.writeFavorite(recipe)
-                }
+                repository.writeFavorite(recipe)
 
                 val favorites: List<Recipe> = _favoriteListState.value
                 _favoriteListState.value = favorites.plus(recipe)
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
-
-            _centerLoadingState.value = false
         }
     }
 
@@ -205,29 +199,23 @@ class MainViewModel @Inject constructor(
         onError: (message: String) -> Unit,
     ) {
         viewModelScope.launch {
-            _centerLoadingState.value = true
-
             try {
-                withContext(Dispatchers.IO) {
-                    repository.deleteFavorite(recipe)
-                }
+                repository.deleteFavorite(recipe)
 
                 val favorites: List<Recipe> = _favoriteListState.value
                 _favoriteListState.value = favorites.filter { it.id != recipe.id }
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
-
-            _centerLoadingState.value = false
         }
     }
 
-    private fun onRecipesFetched() {
+    fun onRecipesFetched() {
         _fetchFromState.value += FETCH_SIZE
         _indexOfFetchTriggerState.value = _recipeListState.value.size - (FETCH_SIZE / 2)
     }
 
-    private fun onRecipeDeleted() {
+    fun onRecipeDeleted() {
         val currentListSize = recipeListState.value.size
         if (currentListSize < FETCH_SIZE / 2) {
             fetchRecipes(

@@ -12,11 +12,5 @@ class RecipeDetailsRepository @Inject constructor(
     private val recipesApi: RecipesApi,
     private val recipeDao: RecipeDao,
 ) {
-    suspend fun insertOrUpdate(recipe: Recipe) {
-        return recipeDao.insertOrUpdate(DbRecipe.fromDomainObject(recipe))
-    }
 
-    suspend fun delete(recipe: Recipe) {
-        return recipeDao.delete(DbRecipe.fromDomainObject(recipe))
-    }
 }

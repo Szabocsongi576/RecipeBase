@@ -6,11 +6,11 @@ import hu.bme.aut.recipebase.persistence.model.DbRecipe
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM recipe")
-    suspend fun getAll(): List<DbRecipe>
+    fun getAll(): List<DbRecipe>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(vararg recipe: DbRecipe)
+    fun insertOrUpdate(vararg recipe: DbRecipe)
 
     @Delete
-    suspend fun delete(vararg recipe: DbRecipe)
+    fun delete(vararg recipe: DbRecipe)
 }
