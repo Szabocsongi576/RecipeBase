@@ -12,6 +12,8 @@ apiKeyPropertiesFile.withReader('UTF-8') { reader ->
 }
 def apiKey = apiKeyProperties.getProperty('apiKey')
 
+apply from: "$project.rootDir/jacoco.gradle"
+
 android {
     compileSdk 32
 
@@ -37,6 +39,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            testCoverageEnabled true
         }
     }
     compileOptions {
@@ -72,7 +79,6 @@ dependencies {
     def room_version = '2.4.2'
     def archVersion = '2.2.0'
     def kotest_version = '4.2.5'
-    def espresso_version = '3.4.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
