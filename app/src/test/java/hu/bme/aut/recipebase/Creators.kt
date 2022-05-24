@@ -1,7 +1,9 @@
 package hu.bme.aut.recipebase
 
+import com.google.gson.Gson
 import hu.bme.aut.recipebase.network.model.*
 import hu.bme.aut.recipebase.persistence.model.DbRecipe
+import org.json.JSONObject
 
 fun createNetworkRecipe(
     id: Long = 1,
@@ -43,7 +45,7 @@ fun createNetworkRecipe(
 
     recipe.nutrition = nutrition
 
-   return recipe
+    return recipe
 }
 
 fun createDbRecipe(
@@ -52,108 +54,7 @@ fun createDbRecipe(
 ): DbRecipe {
     return DbRecipe(
         id = id,
-        recipe = """{
-    "approved_at": null,
-    "aspect_ratio": null,
-    "canonical_id": null,
-    "compilations": null,
-    "cook_time_minutes": null,
-    "country": null,
-    "created_at": null,
-    "credits": null,
-    "description": null,
-    "draft_status": null,
-    "facebook_posts": null,
-    "id": $id,
-    "instructions": [
-    {
-        "display_text": "Instruction 1",
-        "end_time": null,
-        "id": null,
-        "position": null,
-        "start_time": null
-    },
-    {
-        "display_text": "Instruction 2",
-        "end_time": null,
-        "id": null,
-        "position": null,
-        "start_time": null
-    },
-    {
-        "display_text": "Instruction 3",
-        "end_time": null,
-        "id": null,
-        "position": null,
-        "start_time": null
-    }
-    ],
-    "is_one_top": null,
-    "is_shoppable": null,
-    "tips_and_ratings_enabled": null,
-    "keywords": null,
-    "language": null,
-    "name": $name,
-    "num_servings": null,
-    "nutrition": {
-        "calories": 500,
-        "carbohydrates": 1,
-        "fat": 2,
-        "fiber": 3,
-        "protein": 4,
-        "sugar": 5,
-        "updated_at": null
-    },
-    "nutrition_visibility": null,
-    "prep_time_minutes": null,
-    "promotion": null,
-    "renditions": null,
-    "sections": [
-    {
-        "components": [
-        {
-            "extra_comment": null,
-            "id": null,
-            "ingredient": null,
-            "measurements": null,
-            "position": null,
-            "raw_text": "Component 1"
-        },
-        {
-            "extra_comment": null,
-            "id": null,
-            "ingredient": null,
-            "measurements": null,
-            "position": null,
-            "raw_text": "Component 2"
-        },
-        {
-            "extra_comment": null,
-            "id": null,
-            "ingredient": null,
-            "measurements": null,
-            "position": null,
-            "raw_text": "Component 3"
-        }
-        ],
-        "position": null
-    }
-    ],
-    "seo_title": null,
-    "servings_noun_plural": null,
-    "servings_noun_singular": null,
-    "show": null,
-    "show_id": null,
-    "slug": null,
-    "tags": null,
-    "thumbnail_alt_text": null,
-    "thumbnail_url": "https://via.placeholder.com/150",
-    "topics": null,
-    "total_time_minutes": null,
-    "total_time_tier": null,
-    "updated_at": null,
-    "user_ratings": null,
-    "yields": null
-}""",
+        recipe = """{"instructions":[{"display_text":"Instruction 1"},{"display_text":"Instruction 2"},{"display_text":"Instruction 3"}],"sections":[{"components":[{"raw_text":"Component 1"},{"raw_text":"Component 2"},{"raw_text":"Component 3"}]}],"thumbnail_url":"https://via.placeholder.com/150","id":$id,"name":"$name","nutrition":{"protein":4,"fat":2,"calories":500,"sugar":5,"carbohydrates":1,"fiber":3}}""",
     )
 }
+

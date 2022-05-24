@@ -26,7 +26,8 @@ class MainViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     private val _selectedRecipeState: MutableState<Recipe?> = mutableStateOf(value = null)
-    private val _searchWidgetState: MutableState<SearchWidgetState> = mutableStateOf(value = SearchWidgetState.CLOSED)
+    private val _searchWidgetState: MutableState<SearchWidgetState> =
+        mutableStateOf(value = SearchWidgetState.CLOSED)
     private val _searchTextState: MutableState<String> = mutableStateOf(value = "")
     private val _recipeListState: MutableState<List<Recipe>> = mutableStateOf(listOf())
     private val _favoriteListState: MutableState<List<Recipe>> = mutableStateOf(listOf())
@@ -54,24 +55,15 @@ class MainViewModel @Inject constructor(
 
     fun init() {
         viewModelScope.launch {
-            //try {
-                val fetchResponse = repository.fetchRecipes(
-                    query = searchTextState.value,
-                    from = _fetchFromState.value,
-                    size = FETCH_SIZE,
-                )
-
-                val currentList: List<Recipe> = _recipeListState.value
-                _recipeListState.value = currentList.plus(fetchResponse.getResults()!!)
-
-                onRecipesFetched()
+            try {
+                _fetchRecipes()
 
                 _favoriteListState.value = repository.readAllFavorite()
 
                 _uiState.value = UiState.Loaded
-           // } catch (e: Exception) {
-            //    _uiState.value = UiState.Error(e.message.toString())
-            //}
+            } catch (e: Exception) {
+                _uiState.value = UiState.Error(e.message.toString())
+            }
         }
     }
 
@@ -93,27 +85,39 @@ class MainViewModel @Inject constructor(
 
     fun fetchRecipes(
         onError: (message: String) -> Unit,
+        from: Long = _fetchFromState.value,
+        size: Long = FETCH_SIZE,
     ) {
         viewModelScope.launch {
             _fetchLoadingState.value = true
 
             try {
-                val response = repository.fetchRecipes(
-                    query = searchTextState.value,
-                    from = _fetchFromState.value,
-                    size = FETCH_SIZE,
+                _fetchRecipes(
+                    from = from,
+                    size = size,
                 )
-
-                val currentList: List<Recipe> = _recipeListState.value
-                _recipeListState.value = currentList.plus(response.getResults()!!)
-
-                onRecipesFetched()
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
 
             _fetchLoadingState.value = false
         }
+    }
+
+    private suspend fun _fetchRecipes(
+        from: Long = _fetchFromState.value,
+        size: Long = FETCH_SIZE,
+    ) {
+        val response = repository.fetchRecipes(
+            query = searchTextState.value,
+            from = from,
+            size = size,
+        )
+
+        val currentList: List<Recipe> = _recipeListState.value
+        _recipeListState.value = currentList.plus(response.getResults()!!)
+
+        onRecipesFetched()
     }
 
     fun searchRecipes(
@@ -162,7 +166,7 @@ class MainViewModel @Inject constructor(
                 val currentList: List<Recipe> = recipeListState.value
                 _recipeListState.value = currentList.filter { it.id != recipe.id!! }
 
-                if(_favoriteListState.value.find { it.id == recipe.id } != null) {
+                if (_favoriteListState.value.find { it.id == recipe.id } != null) {
                     repository.deleteFavorite(recipe)
 
                     val favorites: List<Recipe> = _favoriteListState.value

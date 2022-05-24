@@ -1,7 +1,5 @@
 package hu.bme.aut.recipebase
 
-import hu.bme.aut.recipebase.createDbRecipe
-import hu.bme.aut.recipebase.createNetworkRecipe
 import hu.bme.aut.recipebase.persistence.model.DbRecipe
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.core.spec.style.Test
