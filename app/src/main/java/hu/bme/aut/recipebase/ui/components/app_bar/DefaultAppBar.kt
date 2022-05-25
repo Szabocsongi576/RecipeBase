@@ -2,9 +2,7 @@ package hu.bme.aut.recipebase.ui.components.app_bar
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.West
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,6 +40,17 @@ fun DefaultAppBar(
         },
         navigationIcon = navigationIcon,
         actions = {
+            IconButton(
+                onClick = {
+                    throw RuntimeException("Test Crash") // Force a crash
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Send,
+                    contentDescription = "Trigger crash",
+                    tint = Color.Black
+                )
+            }
             if (onFavoritesClicked != null) {
                 IconButton(
                     onClick = { onFavoritesClicked() }

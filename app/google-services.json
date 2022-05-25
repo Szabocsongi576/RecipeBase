@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "903242444831",
+    "project_id": "recipebase-c1752",
+    "storage_bucket": "recipebase-c1752.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903242444831:android:4d00d8584e0b4e296fe52a",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.recipebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903242444831-a2vbjel578uf0u9n6k19s2i1l194vr21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwRf3OqzRABZT8rcbi6fM3T13hVGUSy6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903242444831-a2vbjel578uf0u9n6k19s2i1l194vr21.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
