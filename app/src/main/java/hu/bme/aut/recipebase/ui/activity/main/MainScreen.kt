@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.google.firebase.analytics.FirebaseAnalytics
 import hu.bme.aut.recipebase.ui.activity.recipe_details.RecipeDetailsActivity
 import hu.bme.aut.recipebase.ui.components.RecipeListItem
 import hu.bme.aut.recipebase.ui.components.app_bar.DefaultAppBar

@@ -13,6 +13,8 @@ apiKeyPropertiesFile.withReader('UTF-8') { reader ->
 def apiKey = apiKeyProperties.getProperty('apiKey')
 
 apply from: "$project.rootDir/jacoco.gradle"
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdk 32
@@ -38,12 +40,8 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            applicationIdSuffix ".debug"
-            minifyEnabled false
             testCoverageEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -146,4 +144,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.6.21"
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 }

@@ -1,9 +1,11 @@
 package hu.bme.aut.recipebase.ui.activity.main
 
 import android.app.Application
+import android.os.Bundle
 import androidx.compose.runtime.*
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hu.bme.aut.recipebase.network.model.Recipe
 import hu.bme.aut.recipebase.ui.state.UiState
@@ -217,6 +219,8 @@ class MainViewModel @Inject constructor(
     fun onRecipesFetched() {
         _fetchFromState.value += FETCH_SIZE
         _indexOfFetchTriggerState.value = _recipeListState.value.size - (FETCH_SIZE / 2)
+
+
     }
 
     fun onRecipeDeleted() {
